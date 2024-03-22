@@ -45,7 +45,7 @@ export default function Home() {
       <div className="text-center text-5xl pb-10">
         Invoices
       </div>
-      <div className="text-[1em] w-full lg:w-6/12">
+      <div className="text-[1em] w-full lg:w-9/12">
         {isFetching && (
           <ArrowPathIcon className="w-5 animate-spin absolute top-2/4 left-2/4" />
         )}
