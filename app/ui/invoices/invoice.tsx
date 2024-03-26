@@ -41,7 +41,7 @@ function Invoice({ item }: InvoicesProps) {
   const hideField = ['id', 'ocr', 'created_at', 'invoice_date', 'customer_name', 'invoice_rows'];
 
   const handleOnChange = (e: any, target: string) => {
-    const currentInvoice = invoice;
+    const currentInvoice: any = invoice;
     currentInvoice[target] = e.target.value
     setInvoice({ ...currentInvoice })
   }
