@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from "react";
-import { PencilIcon, ChevronDoubleDownIcon, CheckIcon, ArrowPathIcon } from '@heroicons/react/24/solid'
+import { PencilIcon, ChevronDoubleDownIcon, CheckIcon, ArrowPathIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import InvoiceInfo from "./invoiceInfo";
 
 interface InvoiceRowProps {
@@ -85,15 +85,10 @@ function Invoice({ item }: InvoicesProps) {
       <strong>{invoice.ocr}</strong>
       <div className="flex gap-3 relative text-center">
         {edit ? <input type="text" className="border-b-[1px] text-center" value={invoice.customer_name} onChange={(e) => handleOnChange(e, 'customer_name')} /> : invoice.customer_name}
-        {previewInvoice ?
-          edit
-            ? isFetching
-              ? <ArrowPathIcon className="w-5 animate-spin absolute -right-4 top-1" />
-              : <CheckIcon className="w-5 absolute -right-4 top-1" onClick={() => handleSave()} />
-            : <PencilIcon className="w-3 absolute -right-4 top-2" onClick={() => {
-              setEdit(!edit)
-            }} />
-          : ''
+        {previewInvoice && !edit &&
+          <PencilIcon className="w-3 absolute -right-4 top-2" onClick={() => {
+            setEdit(!edit)
+          }} />
         }
       </div>
 
@@ -117,12 +112,20 @@ function Invoice({ item }: InvoicesProps) {
             : (
               <InvoiceInfo invoice={invoice} isLoading={fetchingInvoice} />
             )}
-
-          <div className="border-t-[1px] border-[#f5f5f5] mt-4 py-4">
-            <p className="text-xs"><strong>Invoice Date:</strong> {invoice.invoice_date}</p>
-          </div>
         </div>
       )}
+
+      {edit
+        ? isFetching
+          ? <ArrowPathIcon className="w-5 animate-spin" />
+          : (
+            <div className="flex gap-3">
+              <CheckIcon className="w-5" onClick={() => handleSave()} />
+              <XMarkIcon className="w-5" onClick={() => setEdit(!edit)} />
+            </div>
+          )
+        : ''
+      }
     </div>
   )
 }
